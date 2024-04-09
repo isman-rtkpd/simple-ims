@@ -19,10 +19,10 @@ def items_list():
 @app.route("/items/add/<index>")
 def items_add_get(index):
     if index == "0":
-        return render_template("items/add.html", db_notify = "no")
+        return render_template("items/add.html", db_notify = "no", action = "Add new item")
     else:
         db_data = db_helper.items_db_read(index)[0]
-        return render_template("items/add.html", db_name = db_data[2], db_qty = db_data[3], db_modal = db_data[4], db_selling = db_data[5], db_notify = db_data[6], db_notify_thres = db_data[7])
+        return render_template("items/add.html", db_name = db_data[2], db_qty = db_data[3], db_modal = db_data[4], db_selling = db_data[5], db_notify = db_data[6], db_notify_thres = db_data[7], action = "Edit item. ID: %s" % index)
 
 @app.route("/items/add/<index>", methods=["POST"])
 def items_add_post(index):
@@ -43,11 +43,11 @@ def packages_list():
 def packages_add_get(index):
     if index == "0":
         item_list_html = items.populate_items_html_for_package(None)
-        return render_template("packages/add.html", populated_items = item_list_html)
+        return render_template("packages/add.html", populated_items = item_list_html, action = "Add new package")
     else:
         db_data = db_helper.packages_db_read(index)[0]
         item_list_html = items.populate_items_html_for_package(index)
-        return render_template("packages/add.html", populated_items = item_list_html, db_name = db_data[2], db_selling = db_data[4])
+        return render_template("packages/add.html", populated_items = item_list_html, db_name = db_data[2], db_selling = db_data[4], action = "Edit Package. ID: %s" % index)
 
 @app.route("/packages/add/<index>", methods=["POST"])
 def packages_add_post(index):

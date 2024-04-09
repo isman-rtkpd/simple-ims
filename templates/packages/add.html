@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Add packages</title>
+    <title>{{action}}</title>
     <script>
         if (window.history.replaceState) {
             window.history.replaceState(null, null, window.location.href);
@@ -90,7 +90,7 @@
 
 <body>
     <div class="container">
-        <h2>Add new packages</h2>
+        <h2>{{action}}</h2>
         <form method="POST">
             <label for="package_name">package name</label><br>
             {% if db_name is not none %}

@@ -4,7 +4,7 @@ import db_helper
 import items
 import packages
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 @app.route("/")
 def main_page():

@@ -85,12 +85,19 @@
         .btn-cancel:hover {
             background-color: #bd2130;
         }
+
+        .icon {
+            background: url('/static/home.png');
+            height: 20px;
+            width: 20px;
+
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h2>{{action}}</h2>
+        <h2><a href="/"><img class="icon" src="/static/home.png"></a> {{action}}</h2>
         <form method="POST">
             <label for="package_name">package name</label><br>
             {% if db_name is not none %}

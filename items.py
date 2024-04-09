@@ -13,10 +13,10 @@ def parse_db_data_to_html(raw_db_data):
         html += "<td>%s</td>" % db_data[0]
         html += "<td>%s</td>" % db_data[2]
         html += "<td>%s</td>" % db_data[3]
-        html += "<td>%s</td>" % db_data[4]   
         html += "<td>%s</td>" % db_data[5]        
         html += "<td>%s</td>" % (int(db_data[5]) - int(db_data[4]))
         html += "<td>%s</td>" % int(db_data[8])
+        html += "<td>%s</td>" % db_data[4]   
         html += '<td><a href="/items/add/%s">Edit</a></td>' % db_data[0]
         html += "</tr>"
     return html
@@ -66,3 +66,32 @@ def populate_items_html_for_package(package_id):
                 html += '<input type="checkbox" id="item_%s" name="item_%s" value="%s"><label for="item_%s"> %s</label><br>' % (db_data[0], db_data[0], db_data[2], db_data[0], db_data[2])
             index += 1
         return html
+    
+def calculate_modal_price(package_id):
+    index = 1
+    total = 0
+    raw_db_data = read_from_db()
+    package_data = [int(x) for x in db_helper.packages_db_read(package_id)[0][5].split(',')]
+    for db_data in raw_db_data:
+        if index in package_data:
+            total += int(db_data[4])
+        index += 1
+    return total
+
+
+def parse_associated_items(package_id):
+    index = 1
+    items = []
+    raw_db_data = read_from_db()
+    package_data = [int(x) for x in db_helper.packages_db_read(package_id)[0][5].split(',')]
+    for db_data in raw_db_data:
+        if index in package_data:
+            items.append(db_data[2])
+        index += 1
+    output = ''
+    for item_name in items:
+        output += "<li>%s</li>" % item_name
+    
+    output = "<ul>%s</ul>" % output
+    
+    return output

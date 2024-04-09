@@ -47,7 +47,7 @@ def packages_add_get(index):
     else:
         db_data = db_helper.packages_db_read(index)[0]
         item_list_html = items.populate_items_html_for_package(index)
-        return render_template("packages/add.html", populated_items = item_list_html, db_name = db_data[2], db_selling = db_data[3])
+        return render_template("packages/add.html", populated_items = item_list_html, db_name = db_data[2], db_selling = db_data[4])
 
 @app.route("/packages/add/<index>", methods=["POST"])
 def packages_add_post(index):

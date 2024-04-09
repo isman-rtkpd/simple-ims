@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add packages</title>
+    <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
+    <script type="text/javascript">
+        function notifyCheck() {
+            if (document.getElementById('option_notify_yes').checked) {
+                document.getElementById('if_notify').style.visibility = 'visible';
+            }
+            else document.getElementById('if_notify').style.visibility = 'hidden';
+
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="datetime-local"],
+        select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        select {
+            width: 100%;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #56c178;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #56c178;
+        }
+
+        button:last-child {
+            margin-right: 0;
+        }
+
+        .btn-cancel {
+            background-color: #dc3545;
+        }
+
+        .btn-cancel:hover {
+            background-color: #bd2130;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Add new packages</h2>
+        <form method="POST">
+            <label for="package_name">package name</label><br>
+            {% if db_name is not none %}
+            <input type="text" id="input_package_name" name="package_name" value="{{db_name}}"><br>
+            {% else %}
+            <input type="text" id="input_package_name" name="package_name"><br>
+            {% endif %}
+            <br>
+
+            <label for="package_selling_price">Selling Price</label><br>
+            {% if db_selling is not none %}
+            <input type="number" id="input_selling_price" name="package_selling_price" value="{{db_selling}}"><br>
+            {% else %}
+            <input type="number" id="input_selling_price" name="package_selling_price"><br>
+            {% endif %}
+            <br>
+
+            <div>
+                <label for="input_package_items">Items in package</label><br>
+                <div id="input_package_items" name="related_items">
+                    {% if populated_items is not none %}
+                    {% autoescape false %}
+                    {{ populated_items }}
+                    {% endautoescape %}
+                    {% else %}
+                    <p>Please add items first</p> 
+                    {% endif %}
+                </div>
+            <br>
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+
+</html>

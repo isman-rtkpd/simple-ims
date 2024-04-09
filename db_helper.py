@@ -107,3 +107,95 @@ def items_db_read(item_id = None):
     output = c.fetchall()
     conn.close()
     return output
+
+
+##########
+
+def packages_db_setup():
+    '''Initialize items DB'''
+    conn = sqlite3.connect(ITEMS_DB_PATH) 
+    c = conn.cursor()
+    
+    statement = '''
+        CREATE TABLE IF NOT EXISTS packages(
+            [package_id] INTEGER PRIMARY KEY AUTOINCREMENT, 
+            [updated_date] TEXT,
+            [package_name] TEXT,
+            [sold_number] TEXT,
+            [selling_price] TEXT,
+            [related_item] TEXT
+            )'''
+    c.execute(statement)
+                        
+    conn.commit()
+    conn.close()
+    
+def packages_db_insert(parsed_request):
+    '''Insert entry to items DB
+    
+    Parameters
+    ----------
+    parsed_request
+        list of values
+            [updated_date] TEXT,
+            [package_name] TEXT,
+            [selling_price] TEXT,
+            [related_item] TEXT
+    Return:
+    ----------
+    void
+        
+    '''
+    conn = sqlite3.connect(ITEMS_DB_PATH) 
+    c = conn.cursor()
+                    
+    statement = "INSERT INTO packages(updated_date, package_name, sold_number, selling_price, related_item) VALUES (" + \
+            "'%s', " % parsed_request[0] + \
+            "'%s', " % parsed_request[1] + \
+            "'0' , " + \
+            "'%s', " % parsed_request[2] + \
+            "'%s');" % parsed_request[3]
+    c.execute(statement)
+    
+    conn.commit()
+    conn.close()
+    
+def packages_db_update(package_id, column, new_data):
+    '''Update item value by item_id on column, update to new_data
+        
+    '''
+    conn = sqlite3.connect(ITEMS_DB_PATH) 
+    c = conn.cursor()
+    
+    statement = "UPDATE packages set %s = '%s' where package_id = %s" % (column, new_data, package_id)
+    c.execute(statement)
+    
+    conn.commit()
+    conn.close()
+    
+def packages_db_read(package_id = None):
+    '''Get item data by item_id
+    
+    Parameters
+    ----------
+    item_id
+    
+    Return:
+    ----------
+    list
+        list of values
+        
+    '''
+    conn = sqlite3.connect(ITEMS_DB_PATH) 
+    c = conn.cursor()
+                    
+    #Get latest index (to get last ticket id)
+    if package_id == None:
+        statement = 'SELECT * FROM packages;'
+    else:
+        statement = 'SELECT * FROM packages where package_id=%s;' % package_id
+        
+    c.execute(statement)
+    output = c.fetchall()
+    conn.close()
+    return output

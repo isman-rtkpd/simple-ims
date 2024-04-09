@@ -48,9 +48,21 @@ def update_values(item_id, form_data):
     db_helper.items_db_update(item_id, "notify_stock", item_notify)
     db_helper.items_db_update(item_id, "notify_thres", item_notify_threshold)
     
-def populate_items_html_for_package():
+def populate_items_html_for_package(package_id):
     raw_db_data = read_from_db()
     html = ""
-    for db_data in raw_db_data:
-        html += '<input type="checkbox" id="item_%s" name="item_%s" value="%s"><label for="item_%s"> %s</label><br>' % (db_data[0], db_data[0], db_data[2], db_data[0], db_data[2])        
-    return html
+    
+    if package_id == None or package_id == 0:
+        for db_data in raw_db_data:
+            html += '<input type="checkbox" id="item_%s" name="item_%s" value="%s" ><label for="item_%s"> %s</label><br>' % (db_data[0], db_data[0], db_data[2], db_data[0], db_data[2])        
+        return html
+    else:
+        index = 1
+        package_data = [int(x) for x in db_helper.packages_db_read(package_id)[0][5].split(',')]
+        for db_data in raw_db_data:
+            if index in package_data:
+                html += '<input type="checkbox" id="item_%s" name="item_%s" value="%s" checked><label for="item_%s"> %s</label><br>' % (db_data[0], db_data[0], db_data[2], db_data[0], db_data[2])
+            else:
+                html += '<input type="checkbox" id="item_%s" name="item_%s" value="%s"><label for="item_%s"> %s</label><br>' % (db_data[0], db_data[0], db_data[2], db_data[0], db_data[2])
+            index += 1
+        return html

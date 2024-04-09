@@ -101,33 +101,33 @@
         <form method="POST">
             <label for="item_name">Item name</label><br>
             {% if db_name is not none %}
-            <input type="text" id="input_item_name" name="item_name" value="{{db_name}}"><br>
+            <input type="text" id="input_item_name" name="item_name" value="{{db_name}}" required><br>
             {% else %}
-            <input type="text" id="input_item_name" name="item_name"><br>
+            <input type="text" id="input_item_name" name="item_name" required><br>
             {% endif %}
             <br>
 
             <label for="item_modal_price">Modal Price</label><br>
             {% if db_modal is not none %}
-            <input type="number" id="input_item_modal_price" name="item_modal_price" value="{{db_modal}}"><br>
+            <input type="number" id="input_item_modal_price" name="item_modal_price" value="{{db_modal}}" min="0" required><br>
             {% else %}
-            <input type="number" id="input_item_modal_price" name="item_modal_price" value="{{db_modal}}"><br>
+            <input type="number" id="input_item_modal_price" name="item_modal_price" min="0" required><br>
             {% endif %}
             <br>
 
             <label for="item_selling_price">Selling Price</label><br>
             {% if db_selling is not none %}
-            <input type="number" id="input_selling_price" name="item_selling_price" value="{{db_selling}}"><br>
+            <input type="number" id="input_selling_price" name="item_selling_price" value="{{db_selling}}" min="0" required><br>
             {% else %}
-            <input type="number" id="input_selling_price" name="item_selling_price"><br>
+            <input type="number" id="input_selling_price" name="item_selling_price" min="0" required><br>
             {% endif %}
             <br>
 
             <label for="item_quantity">Quantity</label><br>
             {% if db_selling is not none %}
-            <input type="number" id="input_item_quantity" name="item_quantity" value="{{db_qty}}"><br>
+            <input type="number" id="input_item_quantity" name="item_quantity" value="{{db_qty}}" min="0" required><br>
             {% else %}
-            <input type="number" id="input_item_quantity" name="item_quantity"><br>
+            <input type="number" id="input_item_quantity" name="item_quantity" min="0" required><br>
             {% endif %}
             <br>
 

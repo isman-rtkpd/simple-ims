@@ -67,6 +67,17 @@ def populate_items_html_for_package(package_id):
             index += 1
         return html
     
+def check_for_below_threshold():
+    raw_db_data = read_from_db()
+    html = "<ul>"
+    
+    for db_data in raw_db_data:
+        if db_data[6] == "yes" and int(db_data[3]) < int(db_data[7]):
+            html += '<li> item <a href="/items/add/%s"> %s</a> is below threshold (%s stock). Currently %s left</li>' % (db_data[0], db_data[2], db_data[7], db_data[3])
+    
+    html += "</ul>"
+    return html
+    
 def calculate_modal_price(package_id):
     index = 1
     total = 0

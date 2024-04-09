@@ -8,7 +8,9 @@ app = Flask(__name__)
 
 @app.route("/")
 def main_page():
-    return render_template("index.html")
+    stock_notification = items.check_for_below_threshold()
+    
+    return render_template("index.html", notification = stock_notification)
 
 @app.route("/items/list")
 def items_list():

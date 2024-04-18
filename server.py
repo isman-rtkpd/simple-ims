@@ -3,6 +3,9 @@ from flask import Flask, request, jsonify, render_template, make_response, send_
 import db_helper
 import items
 import packages
+import sold
+import json
+from time import sleep
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -59,6 +62,32 @@ def packages_add_post(index):
     else:
         packages.update_values(index, request.form)
     return redirect("/packages/list")
+
+@app.route("/sold/list")
+def sold_list():
+    package_data_db = packages.read_from_db()
+    item_data_db = items.read_from_db()
+    html_package_data = sold.parse_packages_db_data(package_data_db)
+    html_item_data = sold.parse_items_db_data(item_data_db)
+    html = packages.parse_db_data_to_html(package_data_db)
+    return render_template("sold/list.html", package_data = html_package_data, item_data = html_item_data)
+
+@app.route("/sold/item/<itemid>", methods = ["POST"])
+def sold_by_item(itemid):
+    qty = json.loads(request.data)['qty']
+    if (qty == ""):
+        make_response()
+    else:
+        items.deduct_item(itemid,int(qty))
+    sleep(.5)
+    return redirect("/")
+
+@app.route("/sold/package/<packageid>", methods = ["POST"])
+def sold_by_package(packageid):
+    qty = json.loads(request.data)['qty']
+    print(qty == "")
+    sleep(.5)
+    return make_response()
 
 
 if __name__ == "__main__":

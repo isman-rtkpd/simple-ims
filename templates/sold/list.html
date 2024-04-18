@@ -4,11 +4,32 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Packages list</title>
+  <title>Sold Item list</title>
   <script>
     if (window.history.replaceState) {
       window.history.replaceState(null, null, window.location.href);
     }
+
+
+    async function soldItem(itemId) {
+      const qty = document.getElementById("sold_item_" + String(itemId)).value
+      if (qty != "") {
+        fetch('/sold/item/' + String(itemId), {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ "qty": qty })
+        })
+        alert('Stock has been deducted') ? "" : location.reload();
+
+      } else {
+        alert('Empty value!');
+      }
+    }
+
+
   </script>
   <style>
     body {
@@ -88,28 +109,37 @@
 
 <body>
   <div class="container">
-    <h2><a href="/"><img class="icon" src="/static/home.png"></a> Package List</h2>
+    <h2><a href="/"><img class="icon" src="/static/home.png"></a> Sold List</h2>
 
     <div>
+      <h1>Package</h1>
       <table>
         <tr class="header">
           <th>Package ID</th>
           <th>Package Name</th>
           <th>Sold Number</th>
-          <th>Modal Price</th>
-          <th>Selling Price</th>
-          <th>Margin</th>
-          <th>Items</th>
-          <th>Action</th>
         </tr>
         {% autoescape false %}
         {{ package_data }}
         {% endautoescape %}
       </table>
-
-
     </div>
-    <a href="/packages/add/0"><button>Add new package</button></a><br><br>
+
+    <div>
+      <h1>Items</h1>
+      <table>
+        <tr class="header">
+          <th>Item ID</th>
+          <th>Item Name</th>
+          <th>Stock</th>
+          <th>Sold Number</th>
+          <th>Action</th>
+        </tr>
+        {% autoescape false %}
+        {{ item_data }}
+        {% endautoescape %}
+      </table>
+    </div>
   </div>
 </body>
 

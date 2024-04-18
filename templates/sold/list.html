@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sold Item list</title>
+  <title>In and Out Inventory</title>
   <script>
     if (window.history.replaceState) {
       window.history.replaceState(null, null, window.location.href);
@@ -127,15 +127,15 @@
 
 <body>
   <div class="container">
-    <h2><a href="/"><img class="icon" src="/static/home.png"></a> Sold List</h2>
-
+    <h2><a href="/"><img class="icon" src="/static/home.png"></a> In/Out Inventory</h2>
+    <small>Input negative number for inbound item (add qty)<br>Input positive number for outbound item (sold/lost qty)</small>
     <div>
       <h1>Package</h1>
       <table>
         <tr class="header">
           <th>Package ID</th>
           <th>Package Name</th>
-          <th>Sold Number</th>
+          <th>Out Number</th>
         </tr>
         {% autoescape false %}
         {{ package_data }}
@@ -150,7 +150,7 @@
           <th>Item ID</th>
           <th>Item Name</th>
           <th>Stock</th>
-          <th>Sold Number</th>
+          <th>Out Number</th>
           <th>Action</th>
         </tr>
         {% autoescape false %}

@@ -24,7 +24,6 @@ def parse_db_data_to_html(raw_db_data):
 def deduct_item(item_id, qty):
     cur_qty = int(db_helper.items_db_read(item_id)[0][3])
     new_qty = cur_qty - qty
-    print("UPDATEEE")
     db_helper.items_db_update(item_id, "quantity", new_qty)
 
 def add_to_db(form_data):

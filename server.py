@@ -75,18 +75,13 @@ def sold_list():
 @app.route("/sold/item/<itemid>", methods = ["POST"])
 def sold_by_item(itemid):
     qty = json.loads(request.data)['qty']
-    if (qty == ""):
-        make_response()
-    else:
-        items.deduct_item(itemid,int(qty))
-    sleep(.5)
-    return redirect("/")
+    items.deduct_item(itemid,int(qty))
+    return make_response()
 
 @app.route("/sold/package/<packageid>", methods = ["POST"])
 def sold_by_package(packageid):
     qty = json.loads(request.data)['qty']
-    print(qty == "")
-    sleep(.5)
+    packages.deduct_package(packageid, int(qty))
     return make_response()
 
 

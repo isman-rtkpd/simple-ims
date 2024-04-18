@@ -25,6 +25,11 @@ def parse_db_data_to_html(raw_db_data):
         html += "</tr>"
     return html
 
+def deduct_package(package_id, qty):
+    related_items = [int(x) for x in db_helper.packages_db_read(package_id)[0][5].split(',')]
+    for item_id in related_items:
+        items.deduct_item(item_id, qty)
+
 def add_to_db(form_data):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     package_name = form_data['package_name']

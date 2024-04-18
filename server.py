@@ -56,30 +56,29 @@ def packages_add_get(index):
 
 @app.route("/packages/add/<index>", methods=["POST"])
 def packages_add_post(index):
-    print(request.form)
     if index == "0":
         packages.add_to_db(request.form)        
     else:
         packages.update_values(index, request.form)
     return redirect("/packages/list")
 
-@app.route("/sold/list")
-def sold_list():
+@app.route("/stockadjustment/list")
+def stockadjustment_list():
     package_data_db = packages.read_from_db()
     item_data_db = items.read_from_db()
     html_package_data = sold.parse_packages_db_data(package_data_db)
     html_item_data = sold.parse_items_db_data(item_data_db)
     html = packages.parse_db_data_to_html(package_data_db)
-    return render_template("sold/list.html", package_data = html_package_data, item_data = html_item_data)
+    return render_template("stockadjustment/list.html", package_data = html_package_data, item_data = html_item_data)
 
-@app.route("/sold/item/<itemid>", methods = ["POST"])
-def sold_by_item(itemid):
+@app.route("/stockadjustment/item/<itemid>", methods = ["POST"])
+def stockadjustment_by_item(itemid):
     qty = json.loads(request.data)['qty']
     items.deduct_item(itemid,int(qty))
     return make_response()
 
-@app.route("/sold/package/<packageid>", methods = ["POST"])
-def sold_by_package(packageid):
+@app.route("/stockadjustment/package/<packageid>", methods = ["POST"])
+def stockadjustment_by_package(packageid):
     qty = json.loads(request.data)['qty']
     packages.deduct_package(packageid, int(qty))
     return make_response()

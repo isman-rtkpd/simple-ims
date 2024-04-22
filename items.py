@@ -12,7 +12,7 @@ def parse_db_data_to_html(raw_db_data):
         
         if int(db_data[3]) < int(db_data[7]):
             html_head = '<tr bgcolor="orange" style="color:white;">'   
-            if int(db_data[3]) == 0:
+            if int(db_data[3]) <= 0:
                 html_head = '<tr bgcolor="darkred" style="color:white;">'        
         else:
             html_head += "<tr>"
@@ -64,13 +64,13 @@ def populate_items_html_for_package(package_id):
     raw_db_data = read_from_db()
     html = ""
     
-    if package_id == None or package_id == 0:
+    if package_id == None or package_id <= 0:
         html += ""
         for db_data in raw_db_data:
             style = ""
             if int(db_data[3]) < int(db_data[7]):
                 style = 'style="color:orange;"'
-                if int(db_data[3]) == 0:
+                if int(db_data[3]) <= 0:
                     style = 'style="color:darkred;"'
             html += '<input type="checkbox" id="item_%s" name="item_%s" value="%s"><label for="item_%s" %s> %s</label><br>' %  (db_data[0], db_data[0], db_data[2], db_data[0], style, db_data[2])
         return html
@@ -86,7 +86,7 @@ def populate_items_html_for_package(package_id):
             style = ""
             if int(db_data[3]) < int(db_data[7]):
                 style = 'style="color:orange;"'
-                if int(db_data[3]) == 0:
+                if int(db_data[3]) <= 0:
                     style = 'style="color:darkred;"'
     
                 
@@ -99,9 +99,9 @@ def check_for_below_threshold():
     html = ""
     
     for db_data in raw_db_data:
-        if (db_data[6] == "yes" and int(db_data[3]) < int(db_data[7])) or (int(db_data[3]) == 0):
+        if (db_data[6] == "yes" and int(db_data[3]) < int(db_data[7])) or (int(db_data[3]) <= 0):
 
-            if int(db_data[3]) == 0:
+            if int(db_data[3]) <= 0:
                 html += '<tr bgcolor="darkred" style="color:white;">'
             else:
                 html += '<tr bgcolor="orange" style="color:white;">'            
@@ -142,7 +142,7 @@ def parse_associated_items(package_id):
             items.append(db_data[2])
             if int(db_data[3]) < int(db_data[7]):
                 code = "ORANGE"
-                if int(db_data[3]) == 0:
+                if int(db_data[3]) <= 0:
                     code = "RED"
         index += 1
     output = ''

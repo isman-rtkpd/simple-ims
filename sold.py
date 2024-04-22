@@ -16,7 +16,7 @@ def parse_items_db_data(raw_db_data):
         style = ''
         if int(db_data[3]) < int(db_data[7]):
             style = 'bgcolor="orange" style="color:white;"'
-            if int(db_data[3]) == 0:
+            if int(db_data[3]) <= 0:
                 style = 'bgcolor="darkred" style="color:white;"'
         
         html += "<tr %s>" % style

@@ -52,7 +52,10 @@ def update_values(item_id, form_data):
     item_selling_price = form_data['item_selling_price']
     item_qty = form_data['item_quantity']
     item_notify = form_data['notify_options']
-    item_notify_threshold = form_data['notify_threshold']
+    if item_notify == "no":
+        item_notify_threshold = "1"
+    else:
+        item_notify_threshold = form_data['notify_threshold']
     db_helper.items_db_update(item_id, "updated_date", timestamp)
     db_helper.items_db_update(item_id, "item_name", item_name)
     db_helper.items_db_update(item_id, "quantity", item_qty)

@@ -27,7 +27,7 @@ def parse_db_data_to_html(raw_db_data):
         html += "<td>%s</td>" % db_data[4] #selling price
         html += "<td>%s</td>" % (int(db_data[4]) - modal_price)               #margin
         html += "<td>%s</td>" % parsed_associated_items #associated items
-        html += '<td><a href="/packages/add/%s"><button>Edit</button></a></td>' % db_data[0]
+        html += '<td><a href="/packages/add/%s"><button class="button-action">Edit</button></a></td>' % db_data[0]
         html += "</tr>"
     return html
 

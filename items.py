@@ -24,7 +24,7 @@ def parse_db_data_to_html(raw_db_data):
         html += "<td>%s</td>" % (int(db_data[5]) - int(db_data[4]))
         html += "<td>%s</td>" % int(db_data[8])
         html += "<td>%s</td>" % db_data[4]   
-        html += '<td><a href="/items/add/%s"><button class="btn btn-secondary">Edit</button></a></td>' % db_data[0]
+        html += '<td><a href="/items/add/%s"><button class="button-action">Edit</button></a></td>' % db_data[0]
         html += "</tr>"
     return html
 
@@ -113,7 +113,7 @@ def check_for_below_threshold():
                 html += '<td>--</td>'
 
             html += '<td>%s</td>' % db_data[3]    
-            html += '<td><a href="/items/add/%s"><button>Edit</button></a></td>' % db_data[0]
+            html += '<td><a href="/items/add/%s" class="button-action"><button>Edit</button></a></td>' % db_data[0]
             html += '</tr>' 
     
     print("HTML: " + html)

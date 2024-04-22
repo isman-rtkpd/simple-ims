@@ -13,7 +13,13 @@ def parse_items_db_data(raw_db_data):
     html = ""
     
     for db_data in raw_db_data:
-        html += "<tr>"
+        style = ''
+        if int(db_data[3]) < int(db_data[7]):
+            style = 'bgcolor="orange" style="color:white;"'
+            if int(db_data[3]) == 0:
+                style = 'bgcolor="darkred" style="color:white;"'
+        
+        html += "<tr %s>" % style
         html += "<td>%s</td>" % db_data[0]
         html += "<td>%s</td>" % db_data[2]
         html += "<td>%s</td>" % db_data[3]

@@ -11,17 +11,23 @@ def parse_db_data_to_html(raw_db_data):
     
     for db_data in raw_db_data:
         modal_price = items.calculate_modal_price(db_data[0])
-        parsed_associated_items = items.parse_associated_items(db_data[0])
+        parsed_associated_items, code = items.parse_associated_items(db_data[0])
         
-        html += "<tr>"
+        if code == "YELLOW":
+            html += '<tr bgcolor="yellow" style="color:whitel">'   
+        elif code == "RED":
+            html += '<tr bgcolor="darkred" style="color:white;">'        
+        else:
+            html += "<tr>"
+            
         html += "<td>%s</td>" % db_data[0] #package id
         html += "<td>%s</td>" % db_data[2] #package name
         html += "<td>%s</td>" % db_data[3] #sold number
         html += "<td>%s</td>" % modal_price  #modal price
         html += "<td>%s</td>" % db_data[4] #selling price
         html += "<td>%s</td>" % (int(db_data[4]) - modal_price)               #margin
-        html += "<td>%s</td>" % items.parse_associated_items(db_data[0]) #associated items
-        html += '<td><a href="/packages/add/%s">Edit</a></td>' % db_data[0]
+        html += "<td>%s</td>" % parsed_associated_items #associated items
+        html += '<td><a href="/packages/add/%s"><button>Edit</button></a></td>' % db_data[0]
         html += "</tr>"
     return html
 

@@ -74,13 +74,22 @@ def populate_items_html_for_package(package_id):
     
 def check_for_below_threshold():
     raw_db_data = read_from_db()
-    html = "<ul>"
+    html = ""
     
     for db_data in raw_db_data:
         if db_data[6] == "yes" and int(db_data[3]) < int(db_data[7]):
-            html += '<li> item <a href="/items/add/%s"> %s</a> is below threshold (%s stock). Currently %s left</li>' % (db_data[0], db_data[2], db_data[7], db_data[3])
+
+            if int(db_data[3]) == 0:
+                html += '<tr bgcolor="darkred" style="color:white;">'
+            else:
+                html += '<tr bgcolor="yellow" style="color:whitel">'            
+            html += '<td>%s</a></td>' % db_data[2]
+            html += '<td>%s</td>' % db_data[7]
+            html += '<td>%s</td>' % db_data[3]    
+            html += '<td><a href="/items/add/%s"><button>Edit</button></a></td>' % db_data[0]
+            html += '</tr>' 
     
-    html += "</ul>"
+    print("HTML: " + html)
     return html
     
 def calculate_modal_price(package_id):

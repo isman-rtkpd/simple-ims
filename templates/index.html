@@ -88,9 +88,16 @@
         <a href="/stockadjustment/list"><button>In/Out Inventory!</button></a><br><br>
 
     <div id="notification">
-        {% autoescape false %}
-        {{ notification }}
-        {% endautoescape %}
+        <table>
+            <tr class="header">
+              <th>Item Name</th>
+              <th>Threshold</th>
+              <th>Stock</th>
+            </tr>
+            {% autoescape false %}
+            {{ notification }}
+            {% endautoescape %}
+          </table>
     </div>
 
     </div>

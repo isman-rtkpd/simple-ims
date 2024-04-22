@@ -9,7 +9,14 @@ def parse_db_data_to_html(raw_db_data):
     html = ""
     
     for db_data in raw_db_data:
-        html += "<tr>"
+        
+        if int(db_data[3]) < int(db_data[7]):
+            html_head = '<tr bgcolor="orange" style="color:white;">'   
+            if int(db_data[3]) == 0:
+                html_head = '<tr bgcolor="darkred" style="color:white;">'        
+        else:
+            html_head += "<tr>"
+        html += html_head
         html += "<td>%s</td>" % db_data[0]
         html += "<td>%s</td>" % db_data[2]
         html += "<td>%s</td>" % db_data[3]
@@ -17,7 +24,7 @@ def parse_db_data_to_html(raw_db_data):
         html += "<td>%s</td>" % (int(db_data[5]) - int(db_data[4]))
         html += "<td>%s</td>" % int(db_data[8])
         html += "<td>%s</td>" % db_data[4]   
-        html += '<td><a href="/items/add/%s">Edit</a></td>' % db_data[0]
+        html += '<td><a href="/items/add/%s"><button class="btn btn-secondary">Edit</button></a></td>' % db_data[0]
         html += "</tr>"
     return html
 

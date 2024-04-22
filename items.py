@@ -77,14 +77,19 @@ def check_for_below_threshold():
     html = ""
     
     for db_data in raw_db_data:
-        if db_data[6] == "yes" and int(db_data[3]) < int(db_data[7]):
+        if (db_data[6] == "yes" and int(db_data[3]) < int(db_data[7])) or (int(db_data[3]) == 0):
 
             if int(db_data[3]) == 0:
                 html += '<tr bgcolor="darkred" style="color:white;">'
             else:
                 html += '<tr bgcolor="yellow" style="color:whitel">'            
             html += '<td>%s</a></td>' % db_data[2]
-            html += '<td>%s</td>' % db_data[7]
+            
+            if db_data[6] == "yes":
+                html += '<td>%s</td>' % db_data[7]
+            else:
+                html += '<td>--</td>'
+
             html += '<td>%s</td>' % db_data[3]    
             html += '<td><a href="/items/add/%s"><button>Edit</button></a></td>' % db_data[0]
             html += '</tr>' 

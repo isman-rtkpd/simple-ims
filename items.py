@@ -58,17 +58,32 @@ def populate_items_html_for_package(package_id):
     html = ""
     
     if package_id == None or package_id == 0:
+        html += ""
         for db_data in raw_db_data:
-            html += '<input type="checkbox" id="item_%s" name="item_%s" value="%s" ><label for="item_%s"> %s</label><br>' % (db_data[0], db_data[0], db_data[2], db_data[0], db_data[2])        
+            style = ""
+            if int(db_data[3]) < int(db_data[7]):
+                style = 'style="color:orange;"'
+                if int(db_data[3]) == 0:
+                    style = 'style="color:darkred;"'
+            html += '<input type="checkbox" id="item_%s" name="item_%s" value="%s"><label for="item_%s" %s> %s</label><br>' %  (db_data[0], db_data[0], db_data[2], db_data[0], style, db_data[2])
         return html
     else:
         index = 1
         package_data = [int(x) for x in db_helper.packages_db_read(package_id)[0][5].split(',')]
         for db_data in raw_db_data:
             if index in package_data:
-                html += '<input type="checkbox" id="item_%s" name="item_%s" value="%s" checked><label for="item_%s"> %s</label><br>' % (db_data[0], db_data[0], db_data[2], db_data[0], db_data[2])
+                checked = "checked"
             else:
-                html += '<input type="checkbox" id="item_%s" name="item_%s" value="%s"><label for="item_%s"> %s</label><br>' % (db_data[0], db_data[0], db_data[2], db_data[0], db_data[2])
+                checked = ""
+                
+            style = ""
+            if int(db_data[3]) < int(db_data[7]):
+                style = 'style="color:orange;"'
+                if int(db_data[3]) == 0:
+                    style = 'style="color:darkred;"'
+    
+                
+            html += '<input type="checkbox" id="item_%s" name="item_%s" value="%s" %s><label for="item_%s" %s> %s</label><br>' % (db_data[0], db_data[0], db_data[2], checked, db_data[0], style, db_data[2])
             index += 1
         return html
     
@@ -118,7 +133,7 @@ def parse_associated_items(package_id):
     for db_data in raw_db_data:
         if index in package_data:
             items.append(db_data[2])
-            if db_data[3] < db_data[7]:
+            if int(db_data[3]) < int(db_data[7]):
                 code = "YELLOW"
                 if int(db_data[3]) == 0:
                     code = "RED"

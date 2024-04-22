@@ -13,8 +13,8 @@ def parse_db_data_to_html(raw_db_data):
         modal_price = items.calculate_modal_price(db_data[0])
         parsed_associated_items, code = items.parse_associated_items(db_data[0])
         
-        if code == "YELLOW":
-            html += '<tr bgcolor="yellow" style="color:whitel">'   
+        if code == "ORANGE":
+            html += '<tr bgcolor="orange" style="color:white;">'   
         elif code == "RED":
             html += '<tr bgcolor="darkred" style="color:white;">'        
         else:

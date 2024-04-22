@@ -97,7 +97,7 @@ def check_for_below_threshold():
             if int(db_data[3]) == 0:
                 html += '<tr bgcolor="darkred" style="color:white;">'
             else:
-                html += '<tr bgcolor="yellow" style="color:whitel">'            
+                html += '<tr bgcolor="orange" style="color:white;">'            
             html += '<td>%s</a></td>' % db_data[2]
             
             if db_data[6] == "yes":
@@ -125,7 +125,7 @@ def calculate_modal_price(package_id):
 
 
 def parse_associated_items(package_id):
-    code = "" # YELLOW -> have item below threshold, RED -> have 0 stock
+    code = "" # ORANGE -> have item below threshold, RED -> have 0 stock
     index = 1
     items = []
     raw_db_data = read_from_db()
@@ -134,7 +134,7 @@ def parse_associated_items(package_id):
         if index in package_data:
             items.append(db_data[2])
             if int(db_data[3]) < int(db_data[7]):
-                code = "YELLOW"
+                code = "ORANGE"
                 if int(db_data[3]) == 0:
                     code = "RED"
         index += 1

@@ -6,16 +6,17 @@ def parse_packages_db_data(raw_db_data):
         _, code = items.populate_items_html_for_package(db_data[0])
         print(code)
         if code == "ORANGE":
-            html += '<tr bgcolor="orange">'
+            html += '<tr bgcolor="orange" style="color:white;">'
         elif code == "RED":
-            html += '<tr bgcolor="darkred">'
+            html += '<tr bgcolor="darkred" style="color:white;">'
         else:
             html += "<tr>"
         
         html += "<td>%s</td>" % db_data[0] #package name
-        html += '<td><a href="/packages/add/%s">%s</a></td>' % (db_data[0], db_data[2]) #package id
+        html += '<td>%s</td>' % (db_data[2]) #package id
         html += '<td><input type="number" id="sold_package_%s" placeholder="0" min="1" required></td>' % db_data[0]
         html += '<td><button onclick="soldPackage(%s);" class="button-action">Adjust</button></td>' % (db_data[0])
+        html += '<td><a href="/packages/add/%s"><button class="button-action">Edit package</button></a></td>' % (db_data[0]) #package id
         html += "</tr>"
     return html
 

@@ -15,7 +15,7 @@ def parse_db_data_to_html(raw_db_data):
             if int(db_data[3]) <= 0:
                 html_head = '<tr bgcolor="darkred" style="color:white;">'        
         else:
-            html_head += "<tr>"
+            html_head = "<tr>"
         html += html_head
         html += "<td>%s</td>" % db_data[0]
         html += "<td>%s</td>" % db_data[2]
@@ -26,6 +26,7 @@ def parse_db_data_to_html(raw_db_data):
         html += "<td>%s</td>" % db_data[4]   
         html += '<td><a href="/items/add/%s"><button class="button-action">Edit</button></a></td>' % db_data[0]
         html += "</tr>"
+        
     return html
 
 def deduct_item(item_id, qty):
@@ -100,6 +101,7 @@ def populate_items_html_for_package(package_id):
         return html, code
     
 def check_for_below_threshold():
+    #notify
     raw_db_data = read_from_db()
     html = ""
     
@@ -118,10 +120,9 @@ def check_for_below_threshold():
                 html += '<td>--</td>'
 
             html += '<td>%s</td>' % db_data[3]    
-            html += '<td><a href="/items/add/%s" class="button-action"><button>Edit</button></a></td>' % db_data[0]
+            html += '<td><a href="/items/add/%s"><button class="button-action">Edit</button></a></td>' % db_data[0]
             html += '</tr>' 
     
-    print("HTML: " + html)
     return html
     
 def calculate_modal_price(package_id):

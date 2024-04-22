@@ -63,8 +63,8 @@ def update_values(item_id, form_data):
 def populate_items_html_for_package(package_id):
     raw_db_data = read_from_db()
     html = ""
-    
-    if package_id == None or package_id <= 0:
+    code = ""
+    if package_id == None or package_id == 0:
         html += ""
         for db_data in raw_db_data:
             style = ""
@@ -73,26 +73,31 @@ def populate_items_html_for_package(package_id):
                 if int(db_data[3]) <= 0:
                     style = 'style="color:darkred;"'
             html += '<input type="checkbox" id="item_%s" name="item_%s" value="%s"><label for="item_%s" %s> %s</label><br>' %  (db_data[0], db_data[0], db_data[2], db_data[0], style, db_data[2])
-        return html
+        return html, code
     else:
         index = 1
         package_data = [int(x) for x in db_helper.packages_db_read(package_id)[0][5].split(',')]
+        code = ""
         for db_data in raw_db_data:
             if index in package_data:
                 checked = "checked"
+                print("checked")
+                if int(db_data[3]) < int(db_data[7]) and code != "RED":
+                    code = "ORANGE"
+                    if int(db_data[3]) <= 0:
+                        code = "RED"
             else:
                 checked = ""
-                
+            
             style = ""
             if int(db_data[3]) < int(db_data[7]):
                 style = 'style="color:orange;"'
                 if int(db_data[3]) <= 0:
                     style = 'style="color:darkred;"'
-    
-                
             html += '<input type="checkbox" id="item_%s" name="item_%s" value="%s" %s><label for="item_%s" %s> %s</label><br>' % (db_data[0], db_data[0], db_data[2], checked, db_data[0], style, db_data[2])
             index += 1
-        return html
+        print(code)
+        return html, code
     
 def check_for_below_threshold():
     raw_db_data = read_from_db()

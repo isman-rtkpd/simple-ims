@@ -16,7 +16,7 @@ def parse_packages_db_data(raw_db_data):
         html += '<td>%s</td>' % (db_data[2]) #package id
         html += '<td><input type="number" id="sold_package_%s" placeholder="0" min="1" required></td>' % db_data[0]
         html += '<td><button onclick="soldPackage(%s);" class="button-action">Adjust</button></td>' % (db_data[0])
-        html += '<td><a href="/packages/add/%s"><button class="button-action">Edit package</button></a></td>' % (db_data[0]) #package id
+        html += '<td><a href="/packages/add/%s"><button class="button-action">Edit package</button></a></td>' % (db_data[0])
         html += "</tr>"
     return html
 
@@ -36,5 +36,6 @@ def parse_items_db_data(raw_db_data):
         html += "<td>%s</td>" % db_data[3]
         html += '<td><input type="number" id="sold_item_%s" placeholder="0" required></td>' % db_data[0]
         html += '<td><button onclick="soldItem(%s);" class="button-action">Adjust</button></td>' % (db_data[0])
+        html += '<td><a href="/items/add/%s"><button class="button-action">Edit item</button></a></td>' % (db_data[0])
         html += "</tr>"
     return html

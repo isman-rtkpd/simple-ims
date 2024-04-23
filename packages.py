@@ -2,6 +2,7 @@ import db_helper
 import items
 from datetime import datetime
 import history
+import json
 
 def read_from_db():
     raw_data = db_helper.packages_db_read(None)
@@ -38,29 +39,29 @@ def deduct_package(package_id, qty):
     for item_id in related_items:
         items.deduct_item(item_id, qty, "%s quantity is deducted from package: %s (ID: %s)" % (qty, raw_package_data[2], package_id))
     sold_number = int(raw_package_data[3])
-    db_helper.packages_db_update(package_id, "sold_number", int(sold_number) + int(qty))
-    
+    new_sold_number = int(sold_number) + int(qty)
+    db_helper.packages_db_update(package_id, "sold_number", str(new_sold_number))
+    history.add_history("package", str(package_id), json.dumps(raw_package_data[1:]), json.dumps(list(raw_package_data[1:3]) + [new_sold_number] + list(raw_package_data[4:])), "%s package is sold" % qty)
+
 
 def add_to_db(form_data):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     package_name = form_data['package_name']
     package_selling_price = form_data['package_selling_price']
-    
     checked = []
     checked_items = list(form_data.keys())
     for item in checked_items:
         if "item_" in item: checked.append(item.split("item_")[1])
     checked_string = ",".join(checked)
-    
-    
     req = [timestamp, package_name, package_selling_price, checked_string]
-    db_helper.packages_db_insert(req)
+    last_row_id = db_helper.packages_db_insert(req)
+    history.add_history("package", str(last_row_id), json.dumps([]), json.dumps(req + [0]), "Added new package")
     
 def update_values(package_id, form_data):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     package_name = form_data['package_name']
     package_selling_price = form_data['package_selling_price']
-    
+    old_data = db_helper.packages_db_read(package_id)[0]
     checked = []
     checked_items = list(form_data.keys())
     for item in checked_items:
@@ -71,3 +72,4 @@ def update_values(package_id, form_data):
     db_helper.packages_db_update(package_id, "package_name", package_name)
     db_helper.packages_db_update(package_id, "selling_price", package_selling_price)
     db_helper.packages_db_update(package_id, "related_item", checked_string)
+    history.add_history("package", str(package_id), json.dumps(old_data[1:]), json.dumps([timestamp, package_name, package_selling_price, checked_string, old_data[-1]]), "Added new package")

@@ -231,7 +231,8 @@ def history_db_setup():
             [entry_id] TEXT,
             [prev_value] TEXT,
             [new_value] TEXT,
-            [notes] TEXT
+            [notes] TEXT,
+            [timestamp] TEXT
             )'''
     c.execute(statement)
                         
@@ -259,12 +260,13 @@ def history_db_insert(parsed_request):
     c = conn.cursor()
                     
     print(parsed_request)
-    statement = "INSERT INTO history(entry_type, entry_id, prev_value, new_value, notes) VALUES (" + \
+    statement = "INSERT INTO history(entry_type, entry_id, prev_value, new_value, notes, timestamp) VALUES (" + \
             "'%s', " % parsed_request[0] + \
             "'%s', " % parsed_request[1] + \
             "'%s', " % parsed_request[2] + \
             "'%s', " % parsed_request[3] + \
-            "'%s');" % parsed_request[4]
+            "'%s', " % parsed_request[4] + \
+            "'%s');" % parsed_request[5]
             
     print("STATEMENT:" + str(statement))
     c.execute(statement)

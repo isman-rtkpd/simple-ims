@@ -4,7 +4,6 @@ def parse_packages_db_data(raw_db_data):
     html = ""
     for db_data in raw_db_data:
         _, code = items.populate_items_html_for_package(db_data[0])
-        print(code)
         if code == "ORANGE":
             html += '<tr bgcolor="orange" style="color:white;">'
         elif code == "RED":

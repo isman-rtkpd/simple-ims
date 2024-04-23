@@ -112,7 +112,6 @@ def populate_items_html_for_package(package_id):
         for db_data in raw_db_data:
             if index in package_data:
                 checked = "checked"
-                print("checked")
                 if int(db_data[3]) < int(db_data[7]) and code != "RED":
                     code = "ORANGE"
                     if int(db_data[3]) <= 0:
@@ -127,7 +126,6 @@ def populate_items_html_for_package(package_id):
                     style = 'style="color:darkred;"'
             html += '<input type="checkbox" id="item_%s" name="item_%s" value="%s" %s><label for="item_%s" %s> %s</label><br>' % (db_data[0], db_data[0], db_data[2], checked, db_data[0], style, db_data[2])
             index += 1
-        print(code)
         return html, code
     
 def check_for_below_threshold():

@@ -89,4 +89,5 @@ if __name__ == "__main__":
     # The debug mode can detect the code changes of the server module, and automatically restart the service if there is any modification
     db_helper.items_db_setup()
     db_helper.packages_db_setup()
+    db_helper.history_db_setup()
     app.run(host="0.0.0.0", port=8080, debug=True)

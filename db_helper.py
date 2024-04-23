@@ -63,10 +63,11 @@ def items_db_insert(parsed_request):
             "'%s', " % parsed_request[5] + \
             "'%s', " % parsed_request[6] + \
             "'0')"
-    c.execute(statement)
+    res = c.execute(statement)
     
     conn.commit()
     conn.close()
+    return res.lastrowid
     
 def items_db_update(item_id, column, new_data):
     '''Update item value by item_id on column, update to new_data
@@ -155,10 +156,11 @@ def packages_db_insert(parsed_request):
             "'0' , " + \
             "'%s', " % parsed_request[2] + \
             "'%s');" % parsed_request[3]
-    c.execute(statement)
+    res = c.execute(statement)
     
     conn.commit()
     conn.close()
+    return res.lastrowid
     
 def packages_db_update(package_id, column, new_data):
     '''Update item value by item_id on column, update to new_data
@@ -196,6 +198,62 @@ def packages_db_read(package_id = None):
         statement = 'SELECT * FROM packages where package_id=%s;' % package_id
         
     c.execute(statement)
+    
     output = c.fetchall()
     conn.close()
     return output
+
+
+
+
+##########
+
+def history_db_setup():
+    '''Initialize items DB'''
+    conn = sqlite3.connect(ITEMS_DB_PATH) 
+    c = conn.cursor()
+    
+    statement = '''
+        CREATE TABLE IF NOT EXISTS history(
+            [history_id] INTEGER PRIMARY KEY AUTOINCREMENT, 
+            [entry_type] TEXT,
+            [entry_id] TEXT,
+            [prev_value] TEXT,
+            [new_value] TEXT,
+            [notes] TEXT
+            )'''
+    c.execute(statement)
+                        
+    conn.commit()
+    conn.close()
+    
+def history_db_insert(parsed_request):
+    '''Insert entry to history DB
+    
+    Parameters
+    ----------
+    parsed_request
+        list of values
+            [entry_type] TEXT, (ITEM, PACKAGE)
+            [entry_id] TEXT, (ITEM_ID, ITEM_PACKAGE)
+            [prev_value] TEXT,
+            [new_value] TEXT,
+            [notes] TEXT
+    Return:
+    ----------
+    void
+        
+    '''
+    conn = sqlite3.connect(ITEMS_DB_PATH) 
+    c = conn.cursor()
+                    
+    statement = "INSERT INTO history(entry_type, entry_id, prev_value, new_value, notes) VALUES (" + \
+            "'%s', " % parsed_request[0] + \
+            "'%s', " % parsed_request[1] + \
+            "'%s', " + parsed_request[2] + \
+            "'%s', " % parsed_request[3] + \
+            "'%s');" % parsed_request[4]
+    c.execute(statement)
+    
+    conn.commit()
+    conn.close()

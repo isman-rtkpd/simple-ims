@@ -32,16 +32,19 @@
     async function soldPackage(packageId) {
       const qty = document.getElementById("sold_package_" + String(packageId)).value
       if (qty != "") {
-        fetch('/stockadjustment/package/' + String(packageId), {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ "qty": qty })
-        })
-        alert('Stock on related package has been adjusted') ? "" : location.reload();
-
+        if (Number(qty) <= 0) {
+          alert('Positive integer only for package');
+        } else {
+          fetch('/stockadjustment/package/' + String(packageId), {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "qty": qty })
+          })
+          alert('Stock on related package has been adjusted') ? "" : location.reload();
+        }
       } else {
         alert('Empty value!');
       }
@@ -55,7 +58,8 @@
 <body>
   <div class="container">
     <h2><a href="/"><img class="icon" src="/static/home.png"></a> In/Out Inventory</h2>
-    <small>Input negative number for inbound item (add qty)<br>Input positive number for outbound item (sold/lost qty)</small>
+    <small>Input negative number for inbound item (add qty)<br>Input positive number for outbound item (sold/lost
+      qty)</small>
     <div>
       <h1>Package</h1>
       <table>

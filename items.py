@@ -31,7 +31,7 @@ def parse_db_data_to_html(raw_db_data):
         
     return html
 
-def deduct_item(item_id, qty):
+def deduct_item(item_id, qty, from_package = None):
     old_val = db_helper.items_db_read(item_id)[0]
     cur_qty = int(db_helper.items_db_read(item_id)[0][3])
     new_qty = cur_qty - qty
@@ -39,10 +39,14 @@ def deduct_item(item_id, qty):
     db_helper.items_db_update(item_id, "quantity", new_qty)
     db_helper.items_db_update(item_id, "updated_date", timestamp)
     msg = ""
-    if qty < 0:
-        msg = "Incoming stock"
+    if from_package == None:
+        if qty < 0:
+            msg = "Incoming stock"
+        else:
+            msg = "Outgoing stock"
     else:
-        msg = "Outgoing stock"
+        msg = from_package
+
     
     new_val = [timestamp] + [old_val[2]] + [str(new_qty)] + list(old_val[4:])
     history.add_history("item", item_id, json.dumps(old_val[1:]), json.dumps(new_val), msg)

@@ -34,7 +34,7 @@ def parse_items_db_data(raw_db_data):
         html += "<td>%s</td>" % db_data[0]
         html += "<td>%s</td>" % db_data[2]
         html += "<td>%s</td>" % db_data[3]
-        html += '<td><input type="number" id="sold_item_%s" placeholder="0" min="1" required></td>' % db_data[0]
+        html += '<td><input type="number" id="sold_item_%s" placeholder="0" required></td>' % db_data[0]
         html += '<td><button onclick="soldItem(%s);" class="button-action">Adjust</button></td>' % (db_data[0])
         html += "</tr>"
     return html

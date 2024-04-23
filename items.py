@@ -44,7 +44,7 @@ def deduct_item(item_id, qty):
         msg = "Incoming stock"
     else:
         msg = "Outgoing stock"
-    history.add_history("item", item_id, json.dumps(old_val), json.dumps(new_val), msg)
+    history.add_history("item", item_id, json.dumps(old_val[1:]), json.dumps(new_val), msg)
     
 
 def add_to_db(form_data):
@@ -57,7 +57,7 @@ def add_to_db(form_data):
     item_notify_threshold = form_data['notify_threshold']
     req = [timestamp, item_name, item_qty, item_modal_price, item_selling_price, item_notify, item_notify_threshold]
     last_row_id = db_helper.items_db_insert(req)
-    history.add_history("item", str(last_row_id), "[]", json.dumps(req + [0]), "Added new item")
+    history.add_history("item", str(last_row_id), json.dumps([]), json.dumps(req + [0]), "Added new item")
     
     
 def update_values(item_id, form_data):
@@ -82,7 +82,7 @@ def update_values(item_id, form_data):
     db_helper.items_db_update(item_id, "selling_price", item_selling_price)
     db_helper.items_db_update(item_id, "notify_stock", item_notify)
     db_helper.items_db_update(item_id, "notify_thres", item_notify_threshold)
-    history.add_history("item", item_id, old_val, new_val, "Update item attribute")
+    history.add_history("item", item_id, old_val[1:], new_val, "Update item attribute")
     
 def populate_items_html_for_package(package_id):
     raw_db_data = read_from_db()

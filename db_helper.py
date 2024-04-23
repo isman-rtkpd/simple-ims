@@ -247,13 +247,38 @@ def history_db_insert(parsed_request):
     conn = sqlite3.connect(ITEMS_DB_PATH) 
     c = conn.cursor()
                     
+    print(parsed_request)
     statement = "INSERT INTO history(entry_type, entry_id, prev_value, new_value, notes) VALUES (" + \
             "'%s', " % parsed_request[0] + \
             "'%s', " % parsed_request[1] + \
-            "'%s', " + parsed_request[2] + \
+            "'%s', " % parsed_request[2] + \
             "'%s', " % parsed_request[3] + \
             "'%s');" % parsed_request[4]
+            
+    print("STATEMENT:" + str(statement))
     c.execute(statement)
     
     conn.commit()
     conn.close()
+    
+    
+def history_db_read():
+    '''
+        
+    Return:
+    ----------
+    list
+        list of values
+        
+    '''
+    conn = sqlite3.connect(ITEMS_DB_PATH) 
+    c = conn.cursor()
+                    
+    #Get latest index (to get last ticket id)
+    statement = 'SELECT * FROM history;'
+        
+    c.execute(statement)
+    
+    output = c.fetchall()
+    conn.close()
+    return output

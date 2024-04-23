@@ -1,6 +1,7 @@
 import db_helper
 import items
 from datetime import datetime
+import history
 
 def read_from_db():
     raw_data = db_helper.packages_db_read(None)
@@ -32,9 +33,13 @@ def parse_db_data_to_html(raw_db_data):
     return html
 
 def deduct_package(package_id, qty):
-    related_items = [int(x) for x in db_helper.packages_db_read(package_id)[0][5].split(',')]
+    raw_package_data = db_helper.packages_db_read(package_id)[0]
+    related_items = [int(x) for x in raw_package_data[5].split(',')]
     for item_id in related_items:
-        items.deduct_item(item_id, qty)
+        items.deduct_item(item_id, qty, "%s quantity is deducted from package: %s (ID: %s)" % (qty, raw_package_data[2], package_id))
+    sold_number = int(raw_package_data[3])
+    db_helper.packages_db_update(package_id, "sold_number", int(sold_number) + int(qty))
+    
 
 def add_to_db(form_data):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

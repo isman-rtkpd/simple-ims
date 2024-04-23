@@ -38,12 +38,14 @@ def deduct_item(item_id, qty, from_package = None):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     db_helper.items_db_update(item_id, "quantity", new_qty)
     db_helper.items_db_update(item_id, "updated_date", timestamp)
+    sold_number = old_val[8]
     msg = ""
     if from_package == None:
         if qty < 0:
-            msg = "Incoming stock"
+            msg = "%s quantity as incoming stock" % (int(qty) * -1)
         else:
-            msg = "Outgoing stock"
+            msg = "%s quantity as outgoing stock" % qty
+            db_helper.items_db_update(item_id, "sold_number", int(sold_number) + int(qty))
     else:
         msg = from_package
 

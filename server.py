@@ -5,6 +5,7 @@ import items
 import packages
 import sold
 import json
+import history
 from time import sleep
 
 app = Flask(__name__, static_url_path='/static')
@@ -83,6 +84,10 @@ def stockadjustment_by_package(packageid):
     packages.deduct_package(packageid, int(qty))
     return make_response()
 
+@app.route("/history/list", methods = ["GET"])
+def get_history():
+    html = history.get_history_as_html()
+    return render_template("history/list.html", history_data = html)
 
 if __name__ == "__main__":
     # Run this web app in debug mode

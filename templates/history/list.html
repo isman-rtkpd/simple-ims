@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Items list</title>
+  <title>History list</title>
   <script>
     if (window.history.replaceState) {
       window.history.replaceState(null, null, window.location.href);
@@ -20,17 +20,15 @@
     <div>
       <table>
         <tr class="header">
-          <th>Item ID</th>
-          <th>Item Name</th>
-          <th>Quantity</th>
-          <th>Modal Price</th>
-          <th>Selling Price</th>
-          <th>Margin</th>
-          <th>Sold</th>
-          <th>Action</th>
+          <th>History ID</th>
+          <th>Type</th>
+          <th>Name</th>
+          <th hidden>Prev Value</th>
+          <th hidden>Updated Value</th>
+          <th>Notes</th>
         </tr>
         {% autoescape false %}
-        {{ item_data }}
+        {{ history_data }}
         {% endautoescape %}
       </table>
 

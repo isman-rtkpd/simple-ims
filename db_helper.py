@@ -109,6 +109,12 @@ def items_db_read(item_id = None):
     conn.close()
     return output
 
+def items_db_get_kv():
+    item_dict = dict()
+    items = items_db_read()
+    for item in items:
+        item_dict[item[0]] = item[2]
+    return item_dict
 
 ##########
 
@@ -203,7 +209,12 @@ def packages_db_read(package_id = None):
     conn.close()
     return output
 
-
+def packages_db_get_kv():
+    package_dict = dict()
+    packages = packages_db_read()
+    for package in packages:
+        package_dict[package[0]] = package[2]
+    return package_dict
 
 
 ##########

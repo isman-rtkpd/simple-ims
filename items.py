@@ -36,7 +36,6 @@ def deduct_item(item_id, qty):
     cur_qty = int(db_helper.items_db_read(item_id)[0][3])
     new_qty = cur_qty - qty
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    new_val = [old_val[0]] + [timestamp] + [old_val[2]] + [cur_qty] + old_val[4:]
     db_helper.items_db_update(item_id, "quantity", new_qty)
     db_helper.items_db_update(item_id, "updated_date", timestamp)
     msg = ""
@@ -44,6 +43,8 @@ def deduct_item(item_id, qty):
         msg = "Incoming stock"
     else:
         msg = "Outgoing stock"
+    
+    new_val = [timestamp] + [old_val[2]] + [str(new_qty)] + list(old_val[4:])
     history.add_history("item", item_id, json.dumps(old_val[1:]), json.dumps(new_val), msg)
     
 
@@ -61,7 +62,7 @@ def add_to_db(form_data):
     
     
 def update_values(item_id, form_data):
-    old_val = json.dumps(db_helper.items_db_read(item_id)[0])
+    old_val = json.dumps(db_helper.items_db_read(item_id)[0][1:])
     
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     item_name = form_data['item_name']
@@ -82,7 +83,7 @@ def update_values(item_id, form_data):
     db_helper.items_db_update(item_id, "selling_price", item_selling_price)
     db_helper.items_db_update(item_id, "notify_stock", item_notify)
     db_helper.items_db_update(item_id, "notify_thres", item_notify_threshold)
-    history.add_history("item", item_id, old_val[1:], new_val, "Update item attribute")
+    history.add_history("item", item_id, old_val, new_val, "Update item attribute")
     
 def populate_items_html_for_package(package_id):
     raw_db_data = read_from_db()

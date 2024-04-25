@@ -24,9 +24,14 @@
 
 <body>
     <div class="container">
-        <h2><a href="/"><img class="icon" src="/static/home.png"></a> {{action}}</h2>
+        <a href="/"><img class="icon" src="/static/home.png"></a>
+        <a href="/items/list"><button>Items</button></a>
+        <a href="/packages/list"><button>Packages</button></a>
+        <a href="/stockadjustment/list"><button>In/Out</button></a>
+        <a href="/history/list"><button>History</button></a><br><br>
+        <h2>{{action}}</h2>
         <form method="POST">
-            <label for="package_name">package name</label><br>
+            <label for="package_name">Package name</label><br>
             {% if db_name is not none %}
             <input type="text" id="input_package_name" name="package_name" value="{{db_name}}"><br>
             {% else %}

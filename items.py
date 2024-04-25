@@ -167,15 +167,13 @@ def calculate_modal_price(package_id):
         index += 1
     return total
 
-
-def parse_associated_items(package_id):
+def parse_associated_items(selected_item):
     code = "" # ORANGE -> have item below threshold, RED -> have 0 stock
     index = 1
     items = []
     raw_db_data = read_from_db()
-    package_data = [int(x) for x in db_helper.packages_db_read(package_id)[0][5].split(',')]
     for db_data in raw_db_data:
-        if index in package_data:
+        if index in selected_item:
             items.append(db_data[2])
             if int(db_data[3]) < int(db_data[7]):
                 code = "ORANGE"
@@ -187,5 +185,5 @@ def parse_associated_items(package_id):
         output += "<li>%s</li>" % item_name
     
     output = "<ul>%s</ul>" % output
-    
+
     return output, code

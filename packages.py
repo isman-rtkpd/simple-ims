@@ -13,7 +13,10 @@ def parse_db_data_to_html(raw_db_data):
     
     for db_data in raw_db_data:
         modal_price = items.calculate_modal_price(db_data[0])
-        parsed_associated_items, code = items.parse_associated_items(db_data[0])
+        selected_item = [int(x) for x in db_data[5].split(',')]
+        
+        parsed_associated_items, code = items.parse_associated_items(selected_item)
+        item_stock_kv = db_helper.items_db_get_kv_stock()
         
         if code == "ORANGE":
             html += '<tr bgcolor="orange" style="color:white;">'   
@@ -28,6 +31,14 @@ def parse_db_data_to_html(raw_db_data):
         html += "<td>%s</td>" % modal_price  #modal price
         html += "<td>%s</td>" % db_data[4] #selling price
         html += "<td>%s</td>" % (int(db_data[4]) - modal_price)               #margin
+        
+        min_stock_list = []
+        for item in selected_item:
+            min_stock_list.append(int(item_stock_kv[item]))
+        else:
+            min_stock = min(min_stock_list)
+        
+        html += "<td>%s</td>" % min_stock #associated items
         html += "<td>%s</td>" % parsed_associated_items #associated items
         html += '<td><a href="/packages/add/%s"><button class="button-action">Edit</button></a></td>' % db_data[0]
         html += "</tr>"

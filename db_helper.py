@@ -116,6 +116,13 @@ def items_db_get_kv():
         item_dict[item[0]] = item[2]
     return item_dict
 
+def items_db_get_kv_stock():
+    item_dict = dict()
+    items = items_db_read()
+    for item in items:
+        item_dict[item[0]] = item[3]
+    return item_dict
+
 ##########
 
 def packages_db_setup():

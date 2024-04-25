@@ -1,4 +1,5 @@
 import items
+import db_helper
 
 def parse_packages_db_data(raw_db_data):
     html = ""
@@ -10,9 +11,20 @@ def parse_packages_db_data(raw_db_data):
             html += '<tr bgcolor="darkred" style="color:white;">'
         else:
             html += "<tr>"
+            
         
-        html += "<td>%s</td>" % db_data[0] #package name
-        html += '<td>%s</td>' % (db_data[2]) #package id
+        selected_item = [int(x) for x in db_data[5].split(',')]
+        item_stock_kv = db_helper.items_db_get_kv_stock()        
+        min_stock_list = []
+        for item in selected_item:
+            min_stock_list.append(int(item_stock_kv[item]))
+        else:
+            min_stock = min(min_stock_list)
+        
+        html += "<td>%s</td>" % db_data[0] #package id
+        html += '<td>%s</td>' % (db_data[2]) #package name
+        html += "<td>%s</td>" % min_stock #availstock
+
         html += '<td><input type="number" id="sold_package_%s" placeholder="0" min="1" required></td>' % db_data[0]
         html += '<td><button onclick="soldPackage(%s);" class="button-action">Adjust</button></td>' % (db_data[0])
         html += '<td><a href="/packages/add/%s"><button class="button-action">Edit package</button></a></td>' % (db_data[0])

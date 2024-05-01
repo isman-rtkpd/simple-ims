@@ -52,6 +52,7 @@
 
 
   </script>
+  <script src="/static/main.js"></script>
   <link rel="stylesheet" href="/static/main.css" />
 </head>
 
@@ -67,12 +68,12 @@
       qty)</small>
     <div>
       <h1>Package</h1>
-      <table>
+      <table id="package_table">
         <tr class="header">
-          <th>Package ID</th>
-          <th>Package Name</th>
-          <th>Available Stock</th>
-          <th>Out Number</th>
+          <th onclick="sortTablePackage(0)">Package ID</th>
+          <th onclick="sortTablePackage(1)">Package Name</th>
+          <th onclick="sortTablePackage(2)">Available Stock</th>
+          <th onclick="sortTablePackage(3)">Out Number</th>
         </tr>
         {% autoescape false %}
         {{ package_data }}
@@ -82,13 +83,12 @@
 
     <div>
       <h1>Items</h1>
-      <table>
+      <table id="item_table">
         <tr class="header">
-          <th>Item ID</th>
-          <th>Item Name</th>
-          <th>Stock</th>
+          <th onclick="sortTableItem(0)">Item ID</th>
+          <th onclick="sortTableItem(1)">Item Name</th>
+          <th onclick="sortTableItem(2)">Stock</th>
           <th>Out Number</th>
-          <th>Action</th>
         </tr>
         {% autoescape false %}
         {{ item_data }}

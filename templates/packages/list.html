@@ -11,6 +11,7 @@
     }
   </script>
   <link rel="stylesheet" href="/static/main.css" />
+  <script src="/static/main.js"></script>
 </head>
 
 <body>
@@ -23,15 +24,15 @@
     <h2>Package List</h2>
 
     <div>
-      <table>
+      <table id="package_table">
         <tr class="header">
-          <th>Package ID</th>
-          <th>Package Name</th>
-          <th>Sold Number</th>
-          <th>Modal Price</th>
-          <th>Selling Price</th>
-          <th>Margin</th>
-          <th>Available Stock</th>
+          <th onclick="sortTablePackage(0)">Package ID</th>
+          <th onclick="sortTablePackage(1)">Package Name</th>
+          <th onclick="sortTablePackage(2)">Sold Number</th>
+          <th onclick="sortTablePackage(3)">Modal Price</th>
+          <th onclick="sortTablePackage(4)">Selling Price</th>
+          <th onclick="sortTablePackage(5)">Margin</th>
+          <th onclick="sortTablePackage(6)">Available Stock</th>
           <th>Items</th>
           <th>Action</th>
         </tr>

@@ -11,6 +11,7 @@
         }
     </script>
     <link rel="stylesheet" href="/static/main.css" />
+    <script src="/static/main.js"></script>
 </head>
 
 <body>
@@ -21,21 +22,20 @@
         <a href="/stockadjustment/list"><button>In/Out Inventory!</button></a><br><br>
         <a href="/history/list"><button>History</button></a><br><br>
 
+    {% if notification %}
     <div id="notification">
-        <table>
-            {% if notification %}
-
-                <tr class="header">
-                <th>Item Name</th>
-                <th>Threshold</th>
-                <th>Stock</th>
-                </tr>
+        <table id="item_table">
+            <tr>
+                <th onclick="sortTableItem(0)">Item Name</th>
+                <th onclick="sortTableItem(1)">Threshold</th>
+                <th onclick="sortTableItem(2)">Stock</th>
+            </tr>
                 {% autoescape false %}
                 {{ notification }}
                 {% endautoescape %}
-            {% endif %}
           </table>
     </div>
+    {% endif %}
 
     </div>
 </body>

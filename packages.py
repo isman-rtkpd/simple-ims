@@ -26,11 +26,11 @@ def parse_db_data_to_html(raw_db_data):
             html += "<tr>"
             
         html += "<td>%s</td>" % db_data[0] #package id
-        html += "<td>%s</td>" % db_data[2] #package name
-        html += "<td>%s</td>" % db_data[3] #sold number
-        html += "<td>%s</td>" % modal_price  #modal price
-        html += "<td>%s</td>" % db_data[4] #selling price
-        html += "<td>%s</td>" % (int(db_data[4]) - modal_price)               #margin
+        html += "<td style=\"text-align: center;\">%s</td>" % db_data[2] #package name
+        html += "<td style=\"text-align: right;\">%s</td>" % db_data[3] #sold number
+        html += "<td style=\"text-align: right;\">%s</td>" % modal_price  #modal price
+        html += "<td style=\"text-align: right;\">%s</td>" % db_data[4] #selling price
+        html += "<td style=\"text-align: right;\">%s</td>" % (int(db_data[4]) - modal_price)               #margin
         
         min_stock_list = []
         for item in selected_item:
@@ -38,7 +38,7 @@ def parse_db_data_to_html(raw_db_data):
         else:
             min_stock = min(min_stock_list)
         
-        html += "<td>%s</td>" % min_stock #associated items
+        html += "<td style=\"text-align: right;\">%s</td>" % min_stock #associated items
         html += "<td>%s</td>" % parsed_associated_items #associated items
         html += '<td><a href="/packages/add/%s"><button class="button-action">Edit</button></a></td>' % db_data[0]
         html += "</tr>"

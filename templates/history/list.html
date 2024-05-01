@@ -10,6 +10,30 @@
       window.history.replaceState(null, null, window.location.href);
     }
   </script>
+  <script>
+    function filterEntry() {
+      // Declare variables
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("filter_entry_input");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("history_table");
+      tr = table.getElementsByTagName("tr");
+
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[2];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+  </script>
+
   <link rel="stylesheet" href="/static/main.css" />
 </head>
 
@@ -22,8 +46,9 @@
     <a href="/history/list"><button>History</button></a><br><br>
 
     <h2>History List</h2>
+    <input type="text" id="filter_entry_input" onkeyup="filterEntry()" placeholder="Filter by name..">
     <div>
-      <table>
+      <table id="history_table">
         <tr class="header">
           <th>History ID</th>
           <th>Timestamp</th>

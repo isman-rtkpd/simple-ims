@@ -147,11 +147,11 @@ def check_for_below_threshold():
             html += '<td>%s</a></td>' % db_data[2]
             
             if db_data[6] == "yes":
-                html += '<td>%s</td>' % db_data[7]
+                html += '<td style=\"text-align: right;\">%s</td>' % util.format_number(db_data[7])
             else:
-                html += '<td>--</td>'
+                html += '<td style=\"text-align: center;\">--</td>'
 
-            html += '<td>%s</td>' % db_data[3]    
+            html += '<td style=\"text-align: right;\">%s</td>' % util.format_number(db_data[3])
             html += '<td><a href="/items/add/%s"><button class="button-action">Edit</button></a></td>' % db_data[0]
             html += '</tr>' 
     

@@ -1,6 +1,7 @@
 import items
 import db_helper
 from datetime import datetime
+import util
 
 def add_history(entry_type, entry_id, prev_value, new_value, diff, notes):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -35,7 +36,7 @@ def get_history_as_html():
             else:
                 stock = db_data[5]
             
-        html += "<td>%s</td>" % stock
+        html += "<td style=\"text-align: right;\">%s</td>" % util.format_number(stock)
         html += "<td hidden>%s</td>" % db_data[3] 
         html += "<td hidden>%s</td>" % db_data[4] 
         html += "<td>%s</td>" % db_data[6] 

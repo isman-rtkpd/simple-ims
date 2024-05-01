@@ -20,12 +20,12 @@ def parse_db_data_to_html(raw_db_data):
             html_head = "<tr>"
         html += html_head
         html += "<td>%s</td>" % db_data[0]
-        html += "<td>%s</td>" % db_data[2]
-        html += "<td>%s</td>" % db_data[3]
-        html += "<td>%s</td>" % db_data[5]        
-        html += "<td>%s</td>" % (int(db_data[5]) - int(db_data[4]))
-        html += "<td>%s</td>" % int(db_data[8])
-        html += "<td>%s</td>" % db_data[4]   
+        html += "<td style=\"text-align: center;\">%s</td>" % db_data[2]
+        html += "<td style=\"text-align: right;\">%s</td>" % db_data[3]
+        html += "<td style=\"text-align: right;\">%s</td>" % db_data[5]        
+        html += "<td style=\"text-align: right;\">%s</td>" % (int(db_data[5]) - int(db_data[4]))
+        html += "<td style=\"text-align: right;\">%s</td>" % int(db_data[8])
+        html += "<td style=\"text-align: right;\">%s</td>" % db_data[4]   
         html += '<td><a href="/items/add/%s"><button class="button-action">Edit</button></a></td>' % db_data[0]
         html += "</tr>"
         

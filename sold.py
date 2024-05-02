@@ -23,7 +23,7 @@ def parse_packages_db_data(raw_db_data):
             min_stock = min(min_stock_list)
         
         html += "<td>%s</td>" % db_data[0] #package id
-        html += '<td style=\"text-align: center;\">%s</td>' % (db_data[2]) #package name
+        html += '<td style=\"text-align: left;\">%s</td>' % (db_data[2]) #package name
         html += "<td style=\"text-align: right;\">%s</td>" % util.format_number(min_stock) #availstock
 
         html += '<td><input type="number" id="sold_package_%s" placeholder="0" min="1" required></td>' % db_data[0]
@@ -44,7 +44,7 @@ def parse_items_db_data(raw_db_data):
         
         html += "<tr %s>" % style
         html += "<td>%s</td>" % db_data[0]
-        html += "<td style=\"text-align: center;\">%s</td>" % db_data[2]
+        html += "<td style=\"text-align: left;\">%s</td>" % db_data[2]
         html += "<td style=\"text-align: right;\">%s</td>" % util.format_number(db_data[3])
         html += '<td><input type="number" id="sold_item_%s" placeholder="0" required></td>' % db_data[0]
         html += '<td><button onclick="soldItem(%s);" class="button-action">Adjust</button></td>' % (db_data[0])

@@ -27,7 +27,7 @@ def parse_db_data_to_html(raw_db_data):
             html += "<tr>"
             
         html += "<td>%s</td>" % db_data[0] #package id
-        html += "<td style=\"text-align: center;\">%s</td>" % db_data[2] #package name
+        html += "<td style=\"text-align: left;\">%s</td>" % db_data[2] #package name
         html += "<td style=\"text-align: right;\">%s</td>" % util.format_number(db_data[3]) #sold number
         html += "<td style=\"text-align: right;\">%s</td>" % util.format_number(modal_price, True)  #modal price
         html += "<td style=\"text-align: right;\">%s</td>" % util.format_number(db_data[4], True) #selling price

@@ -25,7 +25,7 @@ def parse_db_data_to_html(raw_db_data):
         html += "<td style=\"text-align: right;\">%s</td>" % util.format_number(db_data[3])
         html += "<td style=\"text-align: right;\">%s</td>" % util.format_number(db_data[4], True)
         html += "<td style=\"text-align: right;\">%s</td>" % util.format_number(db_data[5], True)
-        html += "<td style=\"text-align: right;\">%s</td>" % util.format_number((int(db_data[4]) - int(db_data[5])), True)
+        html += "<td style=\"text-align: right;\">%s</td>" % util.format_number((int(db_data[5]) - int(db_data[4])), True)
         html += "<td style=\"text-align: right;\">%s</td>" % util.format_number(int(db_data[8]))
         html += '<td><a href="/items/add/%s"><button class="button-action">Edit</button></a></td>' % db_data[0]
         html += "</tr>"

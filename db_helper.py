@@ -10,6 +10,9 @@ ITEMS_DB_NAME = "items.db"
 
 ITEMS_DB_PATH = "%s/%s/%s" % (CWD, DB_FOLDER, ITEMS_DB_NAME)
 
+if not os.path.exists(CWD + "/" + DB_FOLDER):
+    os.mkdir(CWD + "/" + DB_FOLDER)
+
 def items_db_setup():
     '''Initialize items DB'''
     conn = sqlite3.connect(ITEMS_DB_PATH) 

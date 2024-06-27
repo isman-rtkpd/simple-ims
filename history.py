@@ -9,8 +9,8 @@ def add_history(entry_type, entry_id, prev_value, new_value, diff, notes):
     db_helper.history_db_insert(parsed_req)
 
 
-def get_history_as_html():
-    raw_db_data = db_helper.history_db_read()
+def get_history_as_html(limit = 50, page = 1):
+    raw_db_data = db_helper.history_db_read(limit, page)
     item_dict = db_helper.items_db_get_kv()
     package_dict = db_helper.packages_db_get_kv()    
     

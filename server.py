@@ -95,4 +95,4 @@ if __name__ == "__main__":
     db_helper.items_db_setup()
     db_helper.packages_db_setup()
     db_helper.history_db_setup()
-    app.run(host="0.0.0.0", port=8080, debug=True)
+    app.run(host="0.0.0.0", port=8082, debug=True)

@@ -287,7 +287,7 @@ def history_db_insert(parsed_request):
     conn.close()
     
     
-def history_db_read():
+def history_db_read(limit = 50, page = 1):
     '''
         
     Return:
@@ -300,8 +300,7 @@ def history_db_read():
     c = conn.cursor()
                     
     #Get latest index (to get last ticket id)
-    statement = 'SELECT * FROM history_new;'
-        
+    statement = 'SELECT * FROM history_new order by history_id desc limit %s offset %s;' % (limit, (page-1)*limit)
     c.execute(statement)
     
     output = c.fetchall()

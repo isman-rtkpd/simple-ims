@@ -7,11 +7,23 @@ def format_number(text, with_prefix=False, decimal=0):
     except:
         return text
     
-    if 'id_id' in locale.locale_alias:
+    can_set_locale = False
+    try:
+        locale.setlocale(locale.LC_NUMERIC, 'id_id')
+        can_set_locale = True
+    except:
+        pass
+    
+    if not can_set_locale:
         try:
-            locale.setlocale(locale.LC_NUMERIC, 'id_id')
+            locale.setlocale(locale.LC_NUMERIC, 'id_ID')
+            can_set_locale = True
         except:
-            locale.setlocale(locale.LC_NUMERIC, 'no_no')
+            pass
+        
+    if not can_set_locale:
+        locale.setlocale(locale.LC_NUMERIC, 'no_no')
+
     price = locale.format_string("%.*f", (decimal, text), True)
     if with_prefix:
         if text >= 0:    

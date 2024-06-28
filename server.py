@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, make_response, send_from_directory,redirect
+from flask import Flask, request, jsonify, render_template, make_response, send_from_directory,redirect, abort
 
 import db_helper
 import items
@@ -36,8 +36,9 @@ def page_authentication():
         resp.set_cookie('expiry', str(int(datetime.now().timestamp() + 24 * 3600)))
         return resp
     else:
-        sleep(5)
+        sleep(15)
         redirect("/")
+
 
 @app.route("/items/list")
 def items_list():
@@ -48,7 +49,7 @@ def items_list():
         return render_template("items/list.html", item_data = html)
     else:
         sleep(15)
-        return redirect("/")
+        abort(404)
 
 
 @app.route("/items/add/<index>")
@@ -62,7 +63,7 @@ def items_add_get(index):
             return render_template("items/add.html", db_name = db_data[2], db_qty = db_data[3], db_modal = db_data[4], db_selling = db_data[5], db_notify = db_data[6], db_notify_thres = db_data[7], action = "Edit item. ID: %s" % index)
     else:
         sleep(15)
-        return redirect("/")
+        abort(404)
 
 @app.route("/items/add/<index>", methods=["POST"])
 def items_add_post(index):
@@ -75,7 +76,7 @@ def items_add_post(index):
         return redirect("/items/list")
     else:
         sleep(15)
-        return redirect("/")
+        abort(404)
 
 @app.route("/packages/list")
 def packages_list():
@@ -86,7 +87,7 @@ def packages_list():
         return render_template("packages/list.html", package_data = html)
     else:
         sleep(15)
-        return redirect("/")
+        abort(404)
 
 @app.route("/packages/add/<index>")
 def packages_add_get(index):
@@ -101,7 +102,7 @@ def packages_add_get(index):
             return render_template("packages/add.html", populated_items = item_list_html, db_name = db_data[2], db_selling = db_data[4], action = "Edit Package. ID: %s" % index)
     else:
         sleep(15)
-        return redirect("/")
+        abort(404)
 
 @app.route("/packages/add/<index>", methods=["POST"])
 def packages_add_post(index):
@@ -114,7 +115,7 @@ def packages_add_post(index):
         return redirect("/packages/list")
     else:
         sleep(15)
-        return redirect("/")
+        abort(404)
 
 @app.route("/stockadjustment/list")
 def stockadjustment_list():
@@ -128,7 +129,7 @@ def stockadjustment_list():
         return render_template("stockadjustment/list.html", package_data = html_package_data, item_data = html_item_data)
     else:
         sleep(15)
-        return redirect("/")
+        abort(404)
 
 @app.route("/stockadjustment/item/<itemid>", methods = ["POST"])
 def stockadjustment_by_item(itemid):
@@ -139,8 +140,8 @@ def stockadjustment_by_item(itemid):
         return make_response()
     else:
         sleep(15)
-        return redirect("/")
-
+        abort(404)
+        
 @app.route("/stockadjustment/package/<packageid>", methods = ["POST"])
 def stockadjustment_by_package(packageid):
     valid_cookies = util.check_cookies(hash_password, request.cookies)
@@ -150,7 +151,7 @@ def stockadjustment_by_package(packageid):
         return make_response()
     else:
         sleep(15)
-        return redirect("/")
+        abort(404)
 
 @app.route("/history/list", methods = ["GET"])
 def get_history():
@@ -160,7 +161,7 @@ def get_history():
         return render_template("history/list.html", history_data = html)
     else:
         sleep(15)
-        return redirect("/")
+        abort(404)
 
 if __name__ == "__main__":
     # Run this web app in debug mode

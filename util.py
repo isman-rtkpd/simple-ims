@@ -7,10 +7,11 @@ def format_number(text, with_prefix=False, decimal=0):
     except:
         return text
     
-    try:
-        locale.setlocale(locale.LC_NUMERIC, 'id_id')
-    except:
-        locale.setlocale(locale.LC_NUMERIC, 'id_ID')
+    if 'id_id' in locale.locale_alias:
+        try:
+            locale.setlocale(locale.LC_NUMERIC, 'id_id')
+        except:
+            locale.setlocale(locale.LC_NUMERIC, 'no_no')
     price = locale.format_string("%.*f", (decimal, text), True)
     if with_prefix:
         if text >= 0:    
@@ -25,7 +26,7 @@ def check_cookies(hash_password, cookies):
     if hash_password == "":
         return True
     else:
-        if cookies.get("password") == "rahasia" and int(datetime.now().timestamp()) < int(cookies.get("expiry")):
+        if cookies.get("password") == hash_password and int(datetime.now().timestamp()) < int(cookies.get("expiry")):
             return True
         else:
             return False

@@ -7,16 +7,15 @@ import sold
 import json
 import history
 import util
+import const
 from datetime import datetime
 from time import sleep
 import hashlib
 
 app = Flask(__name__, static_url_path='/static')
 
-# Set password. Password is in sha256 hex format e.g.
-# hashlib.sha256(b"desired password").hexdigest()
-# if password is empty, there won't be any auth
-hash_password = ""
+#password is in const file
+hash_password = const.PASSWORD
 
 @app.route("/")
 def main_page():

@@ -1,5 +1,7 @@
 import locale
 from datetime import datetime
+import requests
+import const
 
 def format_number(text, with_prefix=False, decimal=0):
     try:
@@ -42,3 +44,18 @@ def check_cookies(hash_password, cookies):
             return True
         else:
             return False
+        
+      
+### START OF TELEGRAM  
+def __telegram_command(name, data):
+    url = const.TELEGRAM_API_URL(token=const.TELEGRAM_ACCESS_TOKEN, method=name)
+    return requests.post(url=url, json=data)
+
+def telegram_sendMessage(text: str, chat_id: str, notify=True):
+    return __telegram_command('sendMessage', {
+        'text': text,
+        'chat_id': chat_id,
+        'parse_mode': 'markdown',
+        'disable_notification': not notify})
+    
+### END OF TELEGRAM

@@ -270,7 +270,6 @@ def history_db_insert(parsed_request):
     conn = sqlite3.connect(ITEMS_DB_PATH) 
     c = conn.cursor()
                     
-    print(parsed_request)
     statement = "INSERT INTO history_new(entry_type, entry_id, prev_value, new_value, diff, notes, timestamp) VALUES (" + \
             "'%s', " % parsed_request[0] + \
             "'%s', " % parsed_request[1] + \
@@ -280,7 +279,6 @@ def history_db_insert(parsed_request):
             "'%s', " % parsed_request[5] + \
             "'%s');" % parsed_request[6]
             
-    print("STATEMENT:" + str(statement))
     c.execute(statement)
     
     conn.commit()

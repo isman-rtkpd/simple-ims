@@ -52,7 +52,6 @@ def deduct_package(package_id, qty):
         items.deduct_item(item_id, qty, "Sold")
     sold_number = int(raw_package_data[3])
     
-    print("RAWWW %s" % raw_package_data[3])
     new_sold_number = int(sold_number) + int(qty)
     db_helper.packages_db_update(package_id, "sold_number", str(new_sold_number))
     history.add_history("package", str(package_id), json.dumps(raw_package_data[1:]), json.dumps(list(raw_package_data[1:3]) + [new_sold_number] + list(raw_package_data[4:])), str(-1 * qty), "Sold")

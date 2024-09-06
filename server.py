@@ -161,6 +161,14 @@ def get_history():
     else:
         sleep(15)
         abort(404)
+        
+
+@app.route("/get-harga/<name>", methods = ["GET"])
+def get_harga(name):
+    response = {"nameList": ["kupatxxx", "kari", "lontong", "yyy"], "printNameList": ["kupat", "kari", "lontong", "yyyy"], "hargaList": [100,200,30000,4000]}
+    return response
+        
+        
 
 if __name__ == "__main__":
     # Run this web app in debug mode

@@ -156,7 +156,7 @@ def stockadjustment_by_package(packageid):
 def get_history():
     valid_cookies = util.check_cookies(hash_password, request.cookies)
     if valid_cookies:
-        html = history.get_history_as_html()
+        html = history.get_history_as_html(400)
         return render_template("history/list.html", history_data = html)
     else:
         sleep(15)

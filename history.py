@@ -20,7 +20,10 @@ def get_history_as_html(limit = 50, page = 1):
 
         html += "<tr>"    
         html += "<td>%s</td>" % db_data[0]
-        html += "<td>%s</td>" % db_data[7] 
+        the_date = db_data[7]
+        spl = the_date.split()[0].split("-")
+        the_date_out = '-'.join([spl[2], spl[1], spl[0]]) + " " + str(the_date.split()[1]) 
+        html += "<td>%s</td>" % the_date_out
         if entry_type == "item":
             html += "<td>%s</td>" % item_dict[int(db_data[2])]
         elif entry_type == "package":
